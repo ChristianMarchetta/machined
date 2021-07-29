@@ -40,20 +40,47 @@ export type Action<I = void, O = void, T=string> = (input: I) =>
  */
 export class StateMachine<T extends string = string> {
 
-    private _states: Map<T, Action<unknown, unknown, T>>
+    /**
+     * @ignore
+     * a map of state name to state action
+     */
+    private _actions: Map<T, Action<unknown, unknown, T>>
+
+    /**
+     * @ignore 
+     */
     private _memories: Map<T, unknown[]>
+
+    /**
+     * @ignore 
+     */
     private _memoryIndex: number = 0
+
+    /**
+     * @ignore 
+     */
     private _memoizedMemory?: unknown[]
 
+    /**
+     * @ignore 
+     */
     private _initialStateName?: T
+
+    /**
+     * @ignore 
+     */
     private _currentStateName?: T
+
+    /**
+     * @ignore 
+     */
     private _lastStateName?: T
 
     /**
      * Create a new blank state machine
      */
     constructor() {
-        this._states = new Map()
+        this._actions = new Map()
         this._memories = new Map()
     }
 
@@ -72,7 +99,7 @@ export class StateMachine<T extends string = string> {
             throw new Error(`Invalid state name ${name}`)
         }
 
-        this._states.set(name, action as any)
+        this._actions.set(name, action as any)
 
         if (!this._initialStateName) {
             this._initialStateName = name
@@ -129,7 +156,7 @@ export class StateMachine<T extends string = string> {
         while (this._currentStateName != null) {
             this._memoryIndex = 0;
             this._memoizedMemory = undefined;
-            const action: Action<unknown, unknown> | undefined = this._states.get(this._currentStateName);
+            const action: Action<unknown, unknown> | undefined = this._actions.get(this._currentStateName);
 
             if (action === undefined) {
                 if (this._lastStateName) {
