@@ -1,5 +1,5 @@
 
-type OrPromise<T> = T | Promise<T>
+
 
 /**
  * An action is a function associated to a state through the {@link StateMachine.addState} method
@@ -26,25 +26,28 @@ type OrPromise<T> = T | Promise<T>
  * a {@link Promise} of the same type that will be awaited.
  *  
  */
-export type Action<I = void, O = void> = (input: I) =>
-    OrPromise<string | void>
-    | OrPromise<[string | void]>
-    | OrPromise<[string | void, O]>
+export type Action<I = void, O = void, T=string> = (input: I) =>
+    T | void
+    | [T | void]
+    | [T | void, O]
+    | Promise<T | void
+        | [T | void]
+        | [T | void, O]>
 
 
 /**
  * This class implements a [finite-state machine](https://en.wikipedia.org/wiki/Finite-state_machine).
  */
-export class StateMachine {
+export class StateMachine<T extends string = string> {
 
-    private _states: Map<string, Action<unknown, unknown>>
-    private _memories: Map<string, unknown[]>
+    private _states: Map<T, Action<unknown, unknown, T>>
+    private _memories: Map<T, unknown[]>
     private _memoryIndex: number = 0
     private _memoizedMemory?: unknown[]
 
-    private _initialStateName?: string
-    private _currentStateName?: string
-    private _lastStateName?: string
+    private _initialStateName?: T
+    private _currentStateName?: T
+    private _lastStateName?: T
 
     /**
      * Create a new blank state machine
@@ -64,7 +67,7 @@ export class StateMachine {
      * @param action a function of type {@link Action} to perform when the state machine ends up in this state.
      * @returns this StateMachine
      */
-    addState<I, O>(name: string, action: Action<I, O>) {
+    addState<I, O>(name: T, action: Action<I, O, T>) {
         if (name == null) {
             throw new Error(`Invalid state name ${name}`)
         }
@@ -111,7 +114,7 @@ export class StateMachine {
      * @returns a {@link Promise} that resolves to the output of the final state, or undefined if the final state 
      *   did not return any output. Any errors thrown by any state will cause this promise to reject with the error.
      */
-    async start(initialInput?: any, initialState?: string, preventMemoryCleanup?: boolean) {
+    async start(initialInput?: any, initialState?: T, preventMemoryCleanup?: boolean) {
         const pack = <T>(d: T) => Array.isArray(d) ? d : [d]
 
         let input = initialInput
@@ -151,11 +154,11 @@ export class StateMachine {
      * @returns the memoized memory array
      */
     private _memoizeMemory() {
-        this._memoizedMemory = this._memories.get(this._currentStateName as string)
+        this._memoizedMemory = this._memories.get(this._currentStateName as T)
 
         if (this._memoizedMemory === undefined) {
             this._memoizedMemory = []
-            this._memories.set(this._currentStateName as string, this._memoizedMemory)
+            this._memories.set(this._currentStateName as T, this._memoizedMemory)
         }
         return this._memoizedMemory
     }
@@ -229,11 +232,12 @@ export class StateMachine {
      * of another, bigger state machine.
      * This allows for an high degree of reusability.
      *  
-     * @param nextState either 
-     *   - a string containing the next state to move to once the this machine as reached its final state
-     *   - a function that takes the name of the final state this machine reached
-     *      and returns a string representing the name of the next state.
+     * @param nextState either a `string` containing the next state to move to once the this machine 
+     * as reached its final state or a function that takes the name of the final state this machine reached
+     * and returns a `string` representing the name of the next state.
+     * 
      * @param initialState optionally override the name of the initial state of this machine.
+     * 
      * @param preventMemoryCleanUp if true the memory of this machine will not be cleaned once it 
      * is done, therefore if this state is execuded again, the machine will retain its memory.
      * By default, memory is cleaned at the end of every execution of this state.
@@ -244,12 +248,12 @@ export class StateMachine {
      * Output from this machine will be forwarded as input to the next state in the outer machine.
      * 
      */
-    toState<I, O>(
-        nextState?: string | ((lastState: string) => string),
-        initialState?: string,
+    toState<I, O, TT extends string =string>(
+        nextState?: TT | ((lastState: T) => TT),
+        initialState?: T,
         preventMemoryCleanup?: boolean):
 
-        (input: I) => Promise<[string | undefined, O]> {
+        (input: I) => Promise<[TT | undefined, O]> {
 
         return async (input: I) => {
             const result = await this.start(input, initialState, preventMemoryCleanup) as O
@@ -257,44 +261,10 @@ export class StateMachine {
             if (nextState === undefined || typeof nextState === 'string') {
                 return [nextState, result]
             } else if (typeof nextState === 'function') {
-                return [nextState(this._lastStateName as string), result]
+                return [nextState(this._lastStateName as T), result]
             } else {
                 throw new Error("Invalid value for argument nextState")
             }
         }
     }
-}
-
-
-const machine = new StateMachine()
-
-async function main() {
-
-    await machine.addState('foo', () => {
-        console.log("Hello from foo")
-        return 'wait'
-    }).addState('wait', () => new Promise<string>((resolve) => {
-        console.log('I\'ll wait...')
-        setTimeout(() => {
-            resolve('bar')
-        }, 1000)
-    })).addState('bar', () => {
-        console.log('Hello from bar')
-        const [counter, setCounter] = machine.useMemory(0)
-
-        console.log(counter)
-        if (counter === 3) {
-            return [undefined, counter]
-        }
-
-        setCounter(counter + 1)
-        return 'foo'
-    }).start()
-    await new StateMachine()
-        .addState('start', () => {
-            console.log('starting')
-            return 'foobar'
-        }).addState('foobar', machine.toState('end', undefined, true))
-        .addState('end', () => undefined)
-        .start()
 }
