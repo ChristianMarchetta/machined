@@ -70,8 +70,8 @@ export class StateMachine<T extends string = string> {
      * 
      * @param name the name of the new state. 
      *              If you use the name of an existing state, an error is thrown.
-     * @param action an `{@link Action}` to perform when the state machine ends up in this state.
-     * @returns this `{@link StateMachine}`
+     * @param action an {@link Action} to perform when the state machine ends up in this state.
+     * @returns this {@link StateMachine}
      */
     addState<I, O>(name: T, action: Action<I, O, T>) {
         if (this._isBuilt) {
@@ -162,7 +162,7 @@ export class StateMachine<T extends string = string> {
      * @param initialState pass a `string` to override the name of initial state. 
      *  By default the first state added through {@link StateMachine.addState} is used as the initial state.
      *  
-     * @returns a `{@link Promise}` that resolves to a `${@link MachineOutput}` object.  
+     * @returns a {@link Promise} that resolves to a {@link MachineOutput} object.  
      *  Any errors thrown by any state will cause this promise to reject with the error.
      */
     async start<O>(initialInput?: any, initialState?: T):Promise<MachineOutput<T, O>> {

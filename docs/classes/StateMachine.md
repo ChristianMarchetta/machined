@@ -38,7 +38,7 @@ Instanitate a new machine
 
 #### Defined in
 
-[index.ts:50](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L50)
+[index.ts:50](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L50)
 
 ## Methods
 
@@ -62,17 +62,17 @@ by specifying a custom initial state when starting the machine.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `T` | the name of the new state.              If you use the name of an existing state, an error is thrown. |
-| `action` | `Action`<`I`, `O`, `T`\> | an `{@link Action}` to perform when the state machine ends up in this state. |
+| `action` | `Action`<`I`, `O`, `T`\> | an {@link Action} to perform when the state machine ends up in this state. |
 
 #### Returns
 
 [`StateMachine`](StateMachine.md)<`T`\>
 
-this `[StateMachine](StateMachine.md)`
+this [StateMachine](StateMachine.md)
 
 #### Defined in
 
-[index.ts:76](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L76)
+[index.ts:76](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L76)
 
 ___
 
@@ -100,12 +100,12 @@ Once started, the machine cannot be stopped untill it has reached the final stat
 
 `Promise`<[`MachineOutput`](../modules.md#machineoutput)<`T`, `O`\>\>
 
-a `{@link Promise}` that resolves to a `$[MachineOutput](../modules.md#machineoutput)` object.
+a {@link Promise} that resolves to a [MachineOutput](../modules.md#machineoutput) object.
  Any errors thrown by any state will cause this promise to reject with the error.
 
 #### Defined in
 
-[index.ts:168](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L168)
+[index.ts:168](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L168)
 
 ___
 
@@ -166,4 +166,4 @@ an action function that resolves when the machine reaches a final state.
 
 #### Defined in
 
-[index.ts:210](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L210)
+[index.ts:210](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L210)

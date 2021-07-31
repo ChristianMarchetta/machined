@@ -38,4 +38,4 @@ did not return any output, and the name of the final state.
 
 #### Defined in
 
-[index.ts:9](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L9)
+[index.ts:9](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L9)
