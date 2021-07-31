@@ -26,7 +26,7 @@
 | :------ | :------ | :------ |
 | `I` | `I` | the type of the data expected to be passed as input to the action.  This data should be provided by the output of the previous state. |
 | `O` | `O` | the output data of this action, to be forwarded as input to the next state,  or returned by the [StateMachine.start](classes/StateMachine.md#start) method if this action is executed on the last state. |
-| `T` | extends `string` | - |
+| `T` | extends `string` | a string type representing all the possible state names this action can return |
 
 #### Type declaration
 
@@ -41,10 +41,10 @@ Every action is usually responsible for:
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `input` | `I` |
-| `useMemory` | [`UseMemory`](modules.md#usememory) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `I` | the value returned by the previous state, or undefined if this is the initial state or if the   previous state returned no output. |
+| `useMemory` | [`UseMemory`](modules.md#usememory) | a [UseMemory](modules.md#usememory) function to controll this state memory. **You must pay attention to [UseMemory](modules.md#usememory) rules** |
 
 ##### Returns
 
@@ -62,7 +62,7 @@ a {@link Promise} of the same type that will be awaited.
 
 #### Defined in
 
-[action.ts:28](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/action.ts#L28)
+[action.ts:35](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/action.ts#L35)
 
 ___
 
@@ -76,10 +76,10 @@ did not return any output, and the name of the final state.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `string` |
-| `O` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `string` | a string type that represents all possible output states |
+| `O` | `any` | the output type |
 
 #### Type declaration
 
@@ -90,7 +90,7 @@ did not return any output, and the name of the final state.
 
 #### Defined in
 
-[index.ts:11](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L11)
+[index.ts:14](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L14)
 
 ___
 
@@ -102,22 +102,54 @@ ___
 
 ▸ <`T`\>(`initialValue`): readonly [`T`, (`v`: `T`) => `void`]
 
+This type of function is inspired by [React's useState() hook](https://reactjs.org/docs/hooks-state.html)
+and let's you keep track of data inside states that should persist when states are visited multiple times.
+
+**Similar to React's useState(), this method also comes with rules**:
+ - you should only call useMemory() from inside the [Action](modules.md#action) function it was passed to. Do not pass it to other states.
+ - every time an action function is executed for a state, useMemory() must be called the exact same number of times.
+     This means that you should avoid calling useMemory() inside if statements or variable length loops.
+ - if you are calling useMemory() multiple times, you must always perform the calls in the same order in order
+     to consistently get the correct values returned.
+ - If you call [StateMachine.start](classes/StateMachine.md#start) multiple times, every resulting run will have its own isolated memory.
+
+Failure to comply with these rule might result in unexpected behaviour or errors.
+
+In a world without this method, if you want to persist state data you are forced to do it in in the global scope.
+E.g. if you want to increment a counter every time the machine is a given state, you need to store that counter in a global variable.
+This is not ideal because when multiple states need to keep track of multiple variables the situation will get messy very quickly,
+moreover every state can modify some other state's data and make the code more error prone.
+To complicate matter even worse, if you run an asyncronous state machine concurrently there's a very high chanche states might modify
+global variables inconsistently if you are not carefull with it.
+
+The useMemory() method solves these problems
+
 ##### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | the type of the value you want to store in the state memory. |
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `initialValue` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `initialValue` | `T` | an optional initial value to use as the memory value the first time it is called, defaults to undefined |
 
 ##### Returns
 
 readonly [`T`, (`v`: `T`) => `void`]
 
+an array containing two elements:
+ - the current memory value, or initialValue if it was provided and it is the first execution of useMemor(), or undefined
+     if the initial value was not provided
+ - a function that takes a value with which to update the memory
+
+It is important to understand that the value returned in the array is a static **shallow** copy of the current memory value,
+modifying it will not have any effect on actual memory unless you use the provided callback, or unless you are using an object
+as memory and are modyfying one of its property.
+Moreover, multiple calls to the callback in the same state will result in only the last passed value to be stored in the memory.
+
 #### Defined in
 
-[useMemory.ts:1](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/useMemory.ts#L1)
+[useMemory.ts:37](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/useMemory.ts#L37)

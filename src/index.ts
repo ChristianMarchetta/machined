@@ -7,6 +7,9 @@ export {UseMemory} from './useMemory'
  * A MachineOutput object is considered the output of an entire state machine.
  * This consists of the output of the final state, or undefined if the final state 
  * did not return any output, and the name of the final state.
+ * 
+ * @template T a string type that represents all possible output states
+ * @template O the output type
  */
 export type MachineOutput<T extends string, O=any> = {
     lastState: T,
@@ -16,8 +19,10 @@ export type MachineOutput<T extends string, O=any> = {
 
 /**
  * This class implements a [finite-state machine](https://en.wikipedia.org/wiki/Finite-state_machine).
+ * 
+ * @template T a string type that represents all possible state names
  */
-export class StateMachine<T extends string = string> {
+export class StateMachine<T extends string> {
 
     /**
      * @ignore
@@ -70,9 +75,14 @@ export class StateMachine<T extends string = string> {
      * The first added state is considered the initial state. This behaviour can optionally be altered
      * by specifying a custom initial state when starting the machine.
      * 
+     * @template I the input type received by the action
+     * @template O the output type received by the action
+     * 
      * @param name the name of the new state. 
      *              If you use the name of an existing state, an error is thrown.
+     * 
      * @param action an {@link Action} to perform when the state machine ends up in this state.
+     * 
      * @returns this {@link StateMachine}
      */
     addState<I, O>(name: T, action: Action<I, O, T>) {
@@ -159,6 +169,8 @@ export class StateMachine<T extends string = string> {
      * Start the state machine from the initial state.
      * Once started, the machine cannot be stopped untill it has reached the final state, or an error has occurred.
      * 
+     * @template O the output type of the final state of the machine 
+     * 
      * @param initialInput use this data as input to the initial state
      * 
      * @param initialState pass a `string` to override the name of initial state. 
@@ -199,6 +211,10 @@ export class StateMachine<T extends string = string> {
      * 
      * Output from the outer machine will be forwarded as input to the initial state of this machine.
      * Output from this machine will be forwarded as input to the next state in the outer machine.
+     * 
+     * @template I the input type for the initial state
+     * @template O the output type of the final state
+     * @TT a stryng type representing all possible state names of the outer state machine
      *  
      * @param nextState either a `string` containing the next state to move to once the this machine 
      * as reached its final state, or a function that takes the name of the final state this machine reached

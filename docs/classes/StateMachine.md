@@ -6,9 +6,9 @@ This class implements a [finite-state machine](https://en.wikipedia.org/wiki/Fin
 
 ## Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `string``string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `string` | a string type that represents all possible state names |
 
 ## Table of contents
 
@@ -34,11 +34,11 @@ Instanitate a new machine
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `string``string` |
+| `T` | extends `string` |
 
 #### Defined in
 
-[index.ts:52](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L52)
+[index.ts:57](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L57)
 
 ## Methods
 
@@ -52,10 +52,10 @@ by specifying a custom initial state when starting the machine.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `I` |
-| `O` |
+| Name | Description |
+| :------ | :------ |
+| `I` | the input type received by the action |
+| `O` | the output type received by the action |
 
 #### Parameters
 
@@ -72,7 +72,7 @@ this [StateMachine](StateMachine.md)
 
 #### Defined in
 
-[index.ts:78](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L78)
+[index.ts:88](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L88)
 
 ___
 
@@ -85,9 +85,9 @@ Once started, the machine cannot be stopped untill it has reached the final stat
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `O` |
+| Name | Description |
+| :------ | :------ |
+| `O` | the output type of the final state of the machine |
 
 #### Parameters
 
@@ -105,7 +105,7 @@ a {@link Promise} that resolves to a [MachineOutput](../modules.md#machineoutput
 
 #### Defined in
 
-[index.ts:170](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L170)
+[index.ts:182](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L182)
 
 ___
 
@@ -121,13 +121,15 @@ This allows for an high degree of reusability.
 Output from the outer machine will be forwarded as input to the initial state of this machine.
 Output from this machine will be forwarded as input to the next state in the outer machine.
 
+**`tt`** a stryng type representing all possible state names of the outer state machine
+
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `I` | `I` |
-| `O` | `O` |
-| `TT` | extends `string``string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `I` | `I` | the input type for the initial state |
+| `O` | `O` | the output type of the final state |
+| `TT` | extends `string``string` | - |
 
 #### Parameters
 
@@ -152,6 +154,12 @@ This allows for an high degree of reusability.
 Output from the outer machine will be forwarded as input to the initial state of this machine.
 Output from this machine will be forwarded as input to the next state in the outer machine.
 
+**`template`** the input type for the initial state
+
+**`template`** the output type of the final state
+
+**`tt`** a stryng type representing all possible state names of the outer state machine
+
 ##### Parameters
 
 | Name | Type |
@@ -166,4 +174,4 @@ an action function that resolves when the machine reaches a final state.
 
 #### Defined in
 
-[index.ts:212](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L212)
+[index.ts:228](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L228)

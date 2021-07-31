@@ -14,6 +14,13 @@ import { UseMemory } from "./useMemory";
  * @template O the output data of this action, to be forwarded as input to the next state, 
  *  or returned by the {@link StateMachine.start} method if this action is executed on the last state.
  * 
+ * @template T a string type representing all the possible state names this action can return
+ * 
+ * @param input the value returned by the previous state, or undefined if this is the initial state or if the
+ *   previous state returned no output.
+ * 
+ * @param useMemory a {@link UseMemory} function to controll this state memory. **You must pay attention to {@link UseMemory} rules**
+ * 
  * @returns an action must return one of the following types:
  * - if an action returns a {@link string}, it will be considered as the name of the next state
  * - if an action returns {@link undefined}, it will be considered as the final state.
