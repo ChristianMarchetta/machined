@@ -1,5 +1,7 @@
 import { Action } from "./action"
 import { makeUseMemory } from './useMemory'
+export * from './action'
+export {UseMemory} from './useMemory'
 
 /**
  * A MachineOutput object is considered the output of an entire state machine.

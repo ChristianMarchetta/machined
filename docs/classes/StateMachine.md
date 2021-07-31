@@ -38,7 +38,7 @@ Instanitate a new machine
 
 #### Defined in
 
-[index.ts:50](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L50)
+[index.ts:52](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L52)
 
 ## Methods
 
@@ -62,7 +62,7 @@ by specifying a custom initial state when starting the machine.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `T` | the name of the new state.              If you use the name of an existing state, an error is thrown. |
-| `action` | `Action`<`I`, `O`, `T`\> | an {@link Action} to perform when the state machine ends up in this state. |
+| `action` | [`Action`](../modules.md#action)<`I`, `O`, `T`\> | an [Action](../modules.md#action) to perform when the state machine ends up in this state. |
 
 #### Returns
 
@@ -72,7 +72,7 @@ this [StateMachine](StateMachine.md)
 
 #### Defined in
 
-[index.ts:76](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L76)
+[index.ts:78](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L78)
 
 ___
 
@@ -105,7 +105,7 @@ a {@link Promise} that resolves to a [MachineOutput](../modules.md#machineoutput
 
 #### Defined in
 
-[index.ts:168](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L168)
+[index.ts:170](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L170)
 
 ___
 
@@ -166,4 +166,4 @@ an action function that resolves when the machine reaches a final state.
 
 #### Defined in
 
-[index.ts:210](https://github.com/ChristianMarchetta/machined/blob/87597e3/src/index.ts#L210)
+[index.ts:212](https://github.com/ChristianMarchetta/machined/blob/8347c20/src/index.ts#L212)
