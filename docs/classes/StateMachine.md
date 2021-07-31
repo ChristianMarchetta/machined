@@ -18,8 +18,6 @@ This class implements a [finite-state machine](https://en.wikipedia.org/wiki/Fin
 
 ### Methods
 
-- [\_clone](StateMachine.md#_clone)
-- [\_start](StateMachine.md#_start)
 - [addState](StateMachine.md#addstate)
 - [start](StateMachine.md#start)
 - [toAction](StateMachine.md#toaction)
@@ -40,44 +38,9 @@ Instanitate a new machine
 
 #### Defined in
 
-[index.ts:50](https://github.com/ChristianMarchetta/machined/blob/745ec41/src/index.ts#L50)
+[index.ts:50](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L50)
 
 ## Methods
-
-### \_clone
-
-▸ `Private` **_clone**(): [`StateMachine`](StateMachine.md)<`T`\>
-
-#### Returns
-
-[`StateMachine`](StateMachine.md)<`T`\>
-
-#### Defined in
-
-[index.ts:175](https://github.com/ChristianMarchetta/machined/blob/745ec41/src/index.ts#L175)
-
-___
-
-### \_start
-
-▸ `Private` **_start**(`initialInput?`, `initialState?`): `Promise`<`Object`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialInput?` | `any` |
-| `initialState?` | `T` |
-
-#### Returns
-
-`Promise`<`Object`\>
-
-#### Defined in
-
-[index.ts:104](https://github.com/ChristianMarchetta/machined/blob/745ec41/src/index.ts#L104)
-
-___
 
 ### addState
 
@@ -109,7 +72,7 @@ this `[StateMachine](StateMachine.md)`
 
 #### Defined in
 
-[index.ts:76](https://github.com/ChristianMarchetta/machined/blob/745ec41/src/index.ts#L76)
+[index.ts:76](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L76)
 
 ___
 
@@ -142,7 +105,7 @@ a `{@link Promise}` that resolves to a `$[MachineOutput](../modules.md#machineou
 
 #### Defined in
 
-[index.ts:165](https://github.com/ChristianMarchetta/machined/blob/745ec41/src/index.ts#L165)
+[index.ts:168](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L168)
 
 ___
 
@@ -203,4 +166,4 @@ an action function that resolves when the machine reaches a final state.
 
 #### Defined in
 
-[index.ts:203](https://github.com/ChristianMarchetta/machined/blob/745ec41/src/index.ts#L203)
+[index.ts:210](https://github.com/ChristianMarchetta/machined/blob/18b4459/src/index.ts#L210)

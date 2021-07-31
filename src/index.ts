@@ -100,8 +100,11 @@ export class StateMachine<T extends string = string> {
     }
 
 
-
-    private async _start(initialInput?: any, initialState?: T) {
+    /**
+     * @ignore
+     * Actually starts the machine after it has been cloned.
+     */
+    private async _start<O>(initialInput?: any, initialState?: T):Promise<MachineOutput<T, O>> {
         if (this._isMoterMachine) {
             throw new Error('Cannot _start a mother machine')
         }
@@ -172,6 +175,10 @@ export class StateMachine<T extends string = string> {
         return await this._clone()._start(initialInput, initialState)
     }
 
+    /**
+     * @ignore
+     * Create a clone of the mother machine
+     */
     private _clone() {
         const clone = new StateMachine<T>()
         clone._isMoterMachine = false
