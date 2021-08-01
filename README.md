@@ -8,34 +8,45 @@ A minimal State Machine implementation. Zero dependencies, browser and node comp
 npm install machined
 ```
 
-### 2 Import in your project
-We'll break this down below
+### 2 Hello World
+We'll try to implement this simple state machine:
+
+![Hello world state machine](/docs/imgs/HelloWorld.png)
+
+The `initial-state` will pass a string to the `printer` state, which is going to print it.
+Then, the `printer` state will move to the `initial-state` again without passingn any values.
+The cicle continues untill the `intial-state` decides to stop.
+
+Let's look at the code:
+
 ```typescript
 
 import {StateMachine} from 'machined'
 
-const machine = new StateMachine()
+const machine = new StateMachine()  //creating a new state machine
 
 const names = ['Anna', 'Peter', 'Maria', 'Joe']
 
-machine.addState('initial-state', (_, useMemory) => {
-    
-    const [index, setIndex] = useMemory(0)
+machine.addState('initial-state', (_, useMemory) => {       // adding the initial-state along with the action to execute
+                                                            // when we are in this state
+
+    const [index, setIndex] = useMemory(0)                  // store a number called index into this state's memory
 
     if(index === names.length){
-        return
+        return                                              // terminating the machine when there are no more names
     }else{
-        setIndex(index +1)
+        setIndex(index +1)                                  // incrementing index
     }
 
-    const name = names[index]
+    const name = names[index]                               // getting the current name
 
-    return ['printer', name]
+    return ['printer', name]                                // moving to the printer state and passing the name
 })
 
-machine.addState('printer', (input) => {
-    console.log("Hello", input)
-    return 'initial-state'
+machine.addState('printer', (input) => {                    // adding the printer state
+
+    console.log("Hello", input)                             // printing the input 
+    return 'initial-state'                                  // and going back to the initial state
 })
 
 machine.start()
