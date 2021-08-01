@@ -75,3 +75,7 @@ Finally we start the machine.
 By now you are probably wondering how `useMemory()` works. This special function (inspired by [Reacts's useState() hook](https://reactjs.org/docs/hooks-state.html)) let's you save, read and modify data inside a state. So that you don't need to bother declaring and managing external global variables. In this case we are storing the `index` of the current name, with an initial value of `0`, and increasing it by `1` every iteration untill `index` has reached the end of the names array. At that point we simply `return` without providing the name of the next state, meaning we are terminating the execution of the machine.
 
 By default, the first state added to the machine is considered the initial state, hence, as you can probably already tell, in this machine `'initial-state'` is both an initial and final state. 
+
+
+## API reference
+Take a look at our [API reference](docs/modules.md) to master state machines.
