@@ -1,6 +1,8 @@
-[machined](../README.md) / [Exports](../modules.md) / StateMachine
+[machined](../README.md) / [Modules](../modules.md) / [index](../modules/index.md) / StateMachine
 
 # Class: StateMachine<T\>
+
+[index](../modules/index.md).StateMachine
 
 This class implements a [finite-state machine](https://en.wikipedia.org/wiki/Finite-state_machine).
 
@@ -14,13 +16,13 @@ This class implements a [finite-state machine](https://en.wikipedia.org/wiki/Fin
 
 ### Constructors
 
-- [constructor](StateMachine.md#constructor)
+- [constructor](index.StateMachine.md#constructor)
 
 ### Methods
 
-- [addState](StateMachine.md#addstate)
-- [start](StateMachine.md#start)
-- [toAction](StateMachine.md#toaction)
+- [addState](index.StateMachine.md#addstate)
+- [start](index.StateMachine.md#start)
+- [toAction](index.StateMachine.md#toaction)
 
 ## Constructors
 
@@ -38,13 +40,13 @@ Instanitate a new machine
 
 #### Defined in
 
-[index.ts:57](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L57)
+[index.ts:57](https://github.com/ChristianMarchetta/machined/blob/3de8f7a/src/index.ts#L57)
 
 ## Methods
 
 ### addState
 
-▸ **addState**<`I`, `O`\>(`name`, `action`): [`StateMachine`](StateMachine.md)<`T`\>
+▸ **addState**<`I`, `O`\>(`name`, `action`): [`StateMachine`](index.StateMachine.md)<`T`\>
 
 Add a new state to this state machine.
 The first added state is considered the initial state. This behaviour can optionally be altered
@@ -62,23 +64,23 @@ by specifying a custom initial state when starting the machine.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `T` | the name of the new state.              If you use the name of an existing state, an error is thrown. |
-| `action` | [`Action`](../modules.md#action)<`I`, `O`, `T`\> | an [Action](../modules.md#action) to perform when the state machine ends up in this state. |
+| `action` | [`Action`](../modules/index.md#action)<`I`, `O`, `T`\> | an [Action](../modules/index.md#action) to perform when the state machine ends up in this state. |
 
 #### Returns
 
-[`StateMachine`](StateMachine.md)<`T`\>
+[`StateMachine`](index.StateMachine.md)<`T`\>
 
-this [StateMachine](StateMachine.md)
+this [StateMachine](index.StateMachine.md)
 
 #### Defined in
 
-[index.ts:88](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L88)
+[index.ts:88](https://github.com/ChristianMarchetta/machined/blob/3de8f7a/src/index.ts#L88)
 
 ___
 
 ### start
 
-▸ **start**<`O`\>(`initialInput?`, `initialState?`): `Promise`<[`MachineOutput`](../modules.md#machineoutput)<`T`, `O`\>\>
+▸ **start**<`O`\>(`initialInput?`, `initialState?`): `Promise`<[`MachineOutput`](../modules/index.md#machineoutput)<`T`, `O`\>\>
 
 Start the state machine from the initial state.
 Once started, the machine cannot be stopped untill it has reached the final state, or an error has occurred.
@@ -94,18 +96,18 @@ Once started, the machine cannot be stopped untill it has reached the final stat
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `initialInput?` | `any` | use this data as input to the initial state |
-| `initialState?` | `T` | pass a `string` to override the name of initial state.  By default the first state added through [StateMachine.addState](StateMachine.md#addstate) is used as the initial state. |
+| `initialState?` | `T` | pass a `string` to override the name of initial state.  By default the first state added through [StateMachine.addState](index.StateMachine.md#addstate) is used as the initial state. |
 
 #### Returns
 
-`Promise`<[`MachineOutput`](../modules.md#machineoutput)<`T`, `O`\>\>
+`Promise`<[`MachineOutput`](../modules/index.md#machineoutput)<`T`, `O`\>\>
 
-a {@link Promise} that resolves to a [MachineOutput](../modules.md#machineoutput) object.
+a {@link Promise} that resolves to a [MachineOutput](../modules/index.md#machineoutput) object.
  Any errors thrown by any state will cause this promise to reject with the error.
 
 #### Defined in
 
-[index.ts:182](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L182)
+[index.ts:182](https://github.com/ChristianMarchetta/machined/blob/3de8f7a/src/index.ts#L182)
 
 ___
 
@@ -174,4 +176,4 @@ an action function that resolves when the machine reaches a final state.
 
 #### Defined in
 
-[index.ts:228](https://github.com/ChristianMarchetta/machined/blob/c207f70/src/index.ts#L228)
+[index.ts:228](https://github.com/ChristianMarchetta/machined/blob/3de8f7a/src/index.ts#L228)

@@ -5,7 +5,7 @@
   "main": "/dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "document": "typedoc --out docs src/index.ts"
+    "document": "typedoc --out docs src/index.ts src/actions"
   },
   "repository": {
     "type": "git",

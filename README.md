@@ -22,7 +22,7 @@ npm install machined
 ### 2 Hello World
 We'll try to implement this simple state machine:
 
-![Hello world state machine](/docs/imgs/HelloWorld.png)
+![Hello world state machine](/imgs/HelloWorld.png)
 
 The `initial-state` will pass a string to the `printer` state, which is going to print it.
 Then, the `printer` state will move to the `initial-state` again without passingn any values.
@@ -163,4 +163,4 @@ You can do this by simply passing a `string` corresponding to the next state nam
 
 
 ## API reference
-Take a look at our [API reference](docs/modules.md) to master state machines.
+Take a look at our [API reference](/docs/modules.md) to master state machines.
